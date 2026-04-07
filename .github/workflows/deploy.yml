@@ -3,7 +3,7 @@ name: Deploy CRM Backend
 on:
   push:
     branches:
-      - main  # Faqat main branchga push bo'lganda ishlaydi
+      - main
 
 jobs:
   deploy:
@@ -11,30 +11,15 @@ jobs:
 
     steps:
       - name: Deploy to Server via SSH
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.SERVER_HOST }}     # Server IP manzili (GitHub Secrets-dan olinadi)
-          username: ${{ secrets.SERVER_USER }} # Server foydalanuvchisi (ubuntu)
-          key: ${{ secrets.SERVER_SSH_KEY }}   # Server Private Key (~/.ssh/id_rsa ichidagi kod)
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: 22
           script: |
-            # 1. Backend papkasiga o'tish
             cd /var/www/crm-backend
-            
-            # 2. Yangi kodni tortish
             git pull origin main
-            
-            # 3. Kutubxonalarni yangilash
             npm install
-            
-            # 4. Loyihani qayta yig'ish (Build)
             npm run build
-            
-            # 5. PM2 orqali restart berish
             pm2 restart crm-backend --update-env
-            
-            # --- AGAR FRONTEND HAM SHU YERDA BO'LSA, QUYIDAGINI QO'SHISH MUMKIN ---
-            # cd /var/www/crm-frontend
-            # git pull origin main
-            # npm install
-            # npm run build
-            # pm2 restart crm-frontend
