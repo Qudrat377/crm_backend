@@ -20,7 +20,6 @@ jobs:
           script: |
             cd /var/www/crm-backend
             git pull origin main
-            npm install --production # Faqat kerakli paketlar
+            npm install
             npm run build
-            pm2 restart crm-backend || pm2 start dist/main.js --name "crm-backend"
-            npm cache clean --force # Har builddan keyin keshni o'chirish
+            pm2 restart crm-backend --update-env
