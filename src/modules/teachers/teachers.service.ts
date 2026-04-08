@@ -11,9 +11,10 @@ import { User } from '../users/entity/user.entity';
 import { Branch } from '../branches/branch.entity';
 // import { CreateTeacherDto, UpdateTeacherDto, FilterTeacherDto } from './teacher.dto';
 import { paginate } from '../../common/dto/pagination.dto';
-import { FilterTeacherDto } from './dto/filter-teacher.dto';
+// import { FilterTeacherDto } from './dto/filter-teacher.dto';
 import { CreateTeacherDto } from './dto/create-teacher.dto';
 import { UpdateTeacherDto } from './dto/update-teacher.dto';
+import { FilterTeacherDto } from './dto/filter-teacher.dto';
 
 @Injectable()
 export class TeachersService {
